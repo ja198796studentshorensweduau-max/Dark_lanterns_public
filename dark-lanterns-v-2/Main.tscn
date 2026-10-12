@@ -1,0 +1,242 @@
+[gd_scene format=3 uid="uid://ctbro5c5hx51m"]
+
+[ext_resource type="Script" uid="uid://bo5tud7i26dbu" path="res://worldgen.gd" id="1_glv2v"]
+[ext_resource type="Script" uid="uid://dqpy5e4bvhq5r" path="res://player.gd" id="2_uu6xs"]
+[ext_resource type="PackedScene" uid="uid://bwmvof0uwur57" path="res://fireball.tscn" id="3_3b0ty"]
+[ext_resource type="Texture2D" uid="uid://dimmujaaa8dij" path="res://Player_still_v1.png" id="3_r0du0"]
+[ext_resource type="Texture2D" uid="uid://b0lwdl56vyj00" path="res://White_circle_32.png" id="5_5vvyt"]
+[ext_resource type="Texture2D" uid="uid://bvwpi3qp1ps4g" path="res://Bar_empty_v1.png" id="5_lgr22"]
+[ext_resource type="Script" uid="uid://dt8wcuhmjm05" path="res://hud.gd" id="5_trn2v"]
+[ext_resource type="Texture2D" uid="uid://dy8e13vn2spvy" path="res://Health_full_v1.png" id="6_trn2v"]
+[ext_resource type="Texture2D" uid="uid://c8fj28hhl351l" path="res://Brightness_full_v1.png" id="7_03owx"]
+[ext_resource type="PackedScene" uid="uid://dpwk0ce80d7a" path="res://enemy.tscn" id="9_03owx"]
+[ext_resource type="Script" uid="uid://ouxiydiixdi7" path="res://wave_manager.gd" id="9_20pc6"]
+[ext_resource type="Script" uid="uid://buaiwkxfqvdq2" path="res://enemy_spawner.gd" id="10_5vvyt"]
+[ext_resource type="Script" uid="uid://fr2wwtotqqe2" path="res://spawn_controller.gd" id="13_c6i3y"]
+[ext_resource type="Texture2D" uid="uid://hu3ywev7270y" path="res://Campfire_v1.png" id="14_c2ibq"]
+[ext_resource type="Script" uid="uid://chy1vtef7181l" path="res://campfire.gd" id="14_j4qnp"]
+[ext_resource type="Script" uid="uid://dkv47bin12c1d" path="res://campfire_indicator.gd" id="16_sc1dx"]
+[ext_resource type="Texture2D" uid="uid://dt822b3xwqj8f" path="res://Yellow_arrow_v1.png" id="17_kjvhd"]
+[ext_resource type="PackedScene" uid="uid://d2wrdm2yv8ncs" path="res://wood.tscn" id="18_devvj"]
+[ext_resource type="Script" uid="uid://cpr0drvy04omr" path="res://nature_generator.gd" id="18_kjvhd"]
+[ext_resource type="Script" uid="uid://bjinllsvrlhws" path="res://world_save.gd" id="19_2gh4u"]
+[ext_resource type="PackedScene" uid="uid://bwxvhm8v4xl1o" path="res://azuras.tscn" id="19_3b0ty"]
+[ext_resource type="Script" uid="uid://s8g6qf8pfenx" path="res://inventory.gd" id="19_5tuhn"]
+[ext_resource type="PackedScene" uid="uid://c13tj54oyrfen" path="res://inventory_ui.tscn" id="23_bg4s2"]
+[ext_resource type="PackedScene" uid="uid://72cmqxe26euv" path="res://build_menu.tscn" id="24_hhcpw"]
+[ext_resource type="Script" uid="uid://04bc2vvt8n5c" path="res://pause_menu.gd" id="25_mxvw5"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0ky0j"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_r0du0")
+}],
+"loop": 1,
+"name": &"still_v1",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_snite"]
+size = Vector2(8, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j4qnp"]
+atlas = ExtResource("14_c2ibq")
+region = Rect2(7, 0, 7, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fpfj3"]
+atlas = ExtResource("14_c2ibq")
+region = Rect2(14, 0, 7, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sc1dx"]
+atlas = ExtResource("14_c2ibq")
+region = Rect2(0, 16, 7, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kjvhd"]
+atlas = ExtResource("14_c2ibq")
+region = Rect2(0, 0, 7, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_snite"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j4qnp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fpfj3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sc1dx")
+}],
+"loop": 1,
+"name": &"Lit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kjvhd")
+}],
+"loop": 1,
+"name": &"Out",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0ky0j"]
+radius = 30.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hhcpw"]
+size = Vector2(7, 16)
+
+[node name="Worldgen" type="Node2D" unique_id=1524153714]
+script = ExtResource("1_glv2v")
+
+[node name="DarknessOverlay" type="CanvasModulate" parent="." unique_id=376775780]
+color = Color(0, 0, 0, 1)
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=1663837679 groups=["player"]]
+z_index = 10
+z_as_relative = false
+position = Vector2(1536, 1536)
+script = ExtResource("2_uu6xs")
+fireball_scene = ExtResource("3_3b0ty")
+
+[node name="Camera2D" type="Camera2D" parent="CharacterBody2D" unique_id=2059308827]
+zoom = Vector2(12, 12)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D" unique_id=686796152]
+sprite_frames = SubResource("SpriteFrames_0ky0j")
+animation = &"still_v1"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=151900745]
+shape = SubResource("RectangleShape2D_snite")
+
+[node name="PointLight2D" type="PointLight2D" parent="CharacterBody2D" unique_id=1455124330]
+energy = 0.75
+texture = ExtResource("5_5vvyt")
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=67005204]
+script = ExtResource("5_trn2v")
+player_path = NodePath("../CharacterBody2D")
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD" unique_id=1484491851]
+offset_right = 32.0
+offset_bottom = 70.0
+scale = Vector2(6, 6)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/MarginContainer" unique_id=548641880]
+layout_mode = 2
+
+[node name="HealthLabel" type="Label" parent="HUD/MarginContainer/VBoxContainer" unique_id=744504926]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Health"
+
+[node name="HealthBar" type="TextureProgressBar" parent="HUD/MarginContainer/VBoxContainer" unique_id=86260639]
+layout_mode = 2
+texture_under = ExtResource("5_lgr22")
+texture_progress = ExtResource("6_trn2v")
+
+[node name="BrightnessLabel" type="Label" parent="HUD/MarginContainer/VBoxContainer" unique_id=1357330808]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Brightness"
+
+[node name="BrightnessBar" type="TextureProgressBar" parent="HUD/MarginContainer/VBoxContainer" unique_id=1712223980]
+layout_mode = 2
+texture_under = ExtResource("5_lgr22")
+texture_progress = ExtResource("7_03owx")
+
+[node name="WaveManager" type="Node" parent="." unique_id=1990709524]
+script = ExtResource("9_20pc6")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="WaveManager" unique_id=827628170]
+
+[node name="WaveTitle" type="Label" parent="WaveManager/CanvasLayer" unique_id=108200463]
+visible = false
+offset_right = 1136.0
+offset_bottom = 655.0
+theme_override_font_sizes/font_size = 200
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Enemy_spawner" type="Node" parent="." unique_id=2025484128 node_paths=PackedStringArray("player")]
+script = ExtResource("10_5vvyt")
+enemy_scene = ExtResource("9_03owx")
+player = NodePath("../CharacterBody2D")
+minimum_spawn_distance = 50.0
+
+[node name="SpawnController" type="Node" parent="." unique_id=519412459]
+script = ExtResource("13_c6i3y")
+
+[node name="Campfire" type="Node2D" parent="." unique_id=202300206 node_paths=PackedStringArray("click_area")]
+script = ExtResource("14_j4qnp")
+click_area = NodePath("Clickarea")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Campfire" unique_id=1436643946]
+sprite_frames = SubResource("SpriteFrames_snite")
+animation = &"Lit"
+
+[node name="EffectArea" type="Area2D" parent="Campfire" unique_id=863592454]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Campfire/EffectArea" unique_id=1429065023]
+shape = SubResource("CircleShape2D_0ky0j")
+
+[node name="PointLight2D" type="PointLight2D" parent="Campfire" unique_id=813603804]
+scale = Vector2(2, 2)
+texture = ExtResource("5_5vvyt")
+
+[node name="Clickarea" type="Area2D" parent="Campfire" unique_id=1940017510]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Campfire/Clickarea" unique_id=1909749845]
+shape = SubResource("RectangleShape2D_hhcpw")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=810457285]
+
+[node name="CampfireIndicator" type="Control" parent="CanvasLayer" unique_id=620543375 node_paths=PackedStringArray("campfire", "player")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("16_sc1dx")
+campfire = NodePath("../../Campfire")
+player = NodePath("../../CharacterBody2D")
+
+[node name="Arrow" type="TextureRect" parent="CanvasLayer/CampfireIndicator" unique_id=1984771187]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(4, 4)
+offset_transform_scale = Vector2(3, 3)
+texture = ExtResource("17_kjvhd")
+stretch_mode = 4
+
+[node name="NatureGenerator" type="Node" parent="." unique_id=866912218 node_paths=PackedStringArray("player")]
+script = ExtResource("18_kjvhd")
+player = NodePath("../CharacterBody2D")
+tree_scene = ExtResource("18_devvj")
+tree_count = 1000
+azura_scene = ExtResource("19_3b0ty")
+
+[node name="Inventory" type="Node" parent="." unique_id=1414286352]
+script = ExtResource("19_5tuhn")
+
+[node name="WorldSave" type="Node" parent="." unique_id=374317336]
+script = ExtResource("19_2gh4u")
+
+[node name="InventoryLayer" type="CanvasLayer" parent="." unique_id=1258696290]
+layer = 2
+
+[node name="InventoryUI" parent="InventoryLayer" unique_id=1956724264 instance=ExtResource("23_bg4s2")]
+
+[node name="BuildMenu" parent="InventoryLayer" unique_id=860947345 instance=ExtResource("24_hhcpw")]
+
+[node name="PauseMenu" type="CanvasLayer" parent="." unique_id=210457170]
+script = ExtResource("25_mxvw5")
+
+[connection signal="brightness_changed" from="CharacterBody2D" to="CharacterBody2D" method="_on_brightness_changed"]
+[connection signal="brightness_changed" from="CharacterBody2D" to="WaveManager" method="_on_character_body_2d_brightness_changed"]
+[connection signal="brightness_depleted" from="CharacterBody2D" to="WaveManager" method="_on_character_body_2d_brightness_depleted"]
+[connection signal="spawn_enemy_requested" from="WaveManager" to="Enemy_spawner" method="_on_wave_manager_spawn_enemy_requested"]

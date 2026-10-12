@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://d2wrdm2yv8ncs"]
+
+[ext_resource type="Script" uid="uid://b86ny3hv7fvm4" path="res://wood.gd" id="1_fm5dc"]
+[ext_resource type="Texture2D" uid="uid://cocbvfslk0fg0" path="res://Tree_still_v1.png" id="2_gcmtl"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0ky0j"]
+radius = 4.0
+height = 16.0
+
+[node name="Wood" type="Node2D" unique_id=1292838138 groups=["collectable"]]
+script = ExtResource("1_fm5dc")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=117566264]
+texture = ExtResource("2_gcmtl")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1583168981]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1027084848]
+position = Vector2(0, 12)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_0ky0j")

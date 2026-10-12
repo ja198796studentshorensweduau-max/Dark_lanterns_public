@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bwxvhm8v4xl1o"]
+
+[ext_resource type="Script" uid="uid://bebmv4nkrqp13" path="res://azuras.gd" id="1_mscph"]
+[ext_resource type="Texture2D" uid="uid://dqi07xf8ixhhf" path="res://Azura_Still_v1.png" id="2_eoqly"]
+
+[node name="Azuras" type="Node2D" unique_id=1800023790 groups=["collectable"]]
+script = ExtResource("1_mscph")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=292072460]
+texture = ExtResource("2_eoqly")
